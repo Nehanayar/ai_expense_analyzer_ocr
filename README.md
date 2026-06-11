@@ -169,29 +169,38 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ---
 
-### 📊 Dashboard View 1
-![Dashboard 1](Snaps/pic4.png)
+### 📸 OCR Receipt Scanner (Step 1)
+![OCR Step 1](Snaps/pic3.1.png)
 
 ---
 
-### 📊 Dashboard View 2
-![Dashboard 2](Snaps/pic5.png)
+### 📸 OCR Receipt Scanner (Step 2)
+![OCR Step 2](Snaps/pic3.2.png)
+
+---
+
+### 📊 Dashboard View
+![Dashboard](Snaps/pic4.png)
 
 ---
 
 ### 📈 Analytics View
-![Analytics](Snaps/pic6.png)
+![Analytics](Snaps/pic5.png)
 
 ---
 
 ### 🤖 AI Chatbot
-![Chatbot](Snaps/pic7.png)
+![Chatbot](Snaps/pic6.png)
 
 ---
 
 ### 📄 PDF Report
-![Report](Snaps/pic8.png)
+![PDF Report](Snaps/pic7.png)
 
+---
+
+### 📄 Final Report Output
+![Report](Snaps/pic8.png)
 
 ## 🔥 Key Highlights
 
