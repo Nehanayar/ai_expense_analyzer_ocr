@@ -1,19 +1,28 @@
-💰 SpendSmart — AI Expense Analyzer
+# 💰 SpendSmart — AI Expense Analyzer
 
-An end-to-end AI-powered personal finance tracker built using Streamlit, Machine Learning (Prophet), OCR (Tesseract), NLP (SentenceTransformers), and SQLite.
+An end-to-end AI-powered personal finance tracker built using **Streamlit, Machine Learning (Prophet), OCR (Tesseract), NLP (SentenceTransformers), and SQLite**.
 
-✨ Features
-Feature	Description
-🤖 AI Categorization	Automatically classifies expenses using SentenceTransformer embeddings
-📸 Receipt OCR	Upload receipt images and extract text + amount using Tesseract
-📈 ML Forecasting	Prophet model predicts future monthly spending trends
-🎯 Budget Alerts	Set monthly budget and receive email notifications
-📄 PDF Reports	Download professional expense reports with charts
-💬 AI Chat Assistant	Ask questions about your spending in natural language
-🔒 Secure Authentication	bcrypt-based login system with validation
-✏️ Edit Expenses	Modify or update past transactions anytime
-🚀 Setup Instructions
-1. Clone the project
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🤖 AI Categorization | Automatically classifies expenses using SentenceTransformer embeddings |
+| 📸 Receipt OCR | Upload receipt images and extract text + amount using Tesseract |
+| 📈 ML Forecasting | Prophet model predicts future monthly spending trends |
+| 🎯 Budget Alerts | Set monthly budget and receive email notifications |
+| 📄 PDF Reports | Download professional expense reports with charts |
+| 💬 AI Chat Assistant | Ask questions about your spending in natural language |
+| 🔒 Secure Authentication | bcrypt-based login system with validation |
+| ✏️ Edit Expenses | Modify or update past transactions anytime |
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Clone the project
+```bash
 git clone <your-repo-url>
 cd spendsmart
 2. Create virtual environment
@@ -41,10 +50,10 @@ EMAIL_PASS=your_app_password
 Gmail App Password:
 https://myaccount.google.com/apppasswords
 
-6. Run the app
+6. Run the application
 streamlit run main.py
 
-Open:
+Open in browser:
 
 http://localhost:8501
 📁 Project Structure
@@ -52,24 +61,24 @@ spendsmart/
 │
 ├── main.py              # Streamlit UI
 ├── auth.py              # Authentication (bcrypt)
-├── database.py         # SQLite operations
-├── model.py            # Prophet forecasting model
-├── report.py           # PDF report generator
+├── database.py          # SQLite operations
+├── model.py             # Prophet forecasting model
+├── report.py            # PDF report generator
 ├── requirements.txt
 ├── .env
 ├── .env.example
 └── expense.db (auto-created)
 🧠 How It Works (Technical Overview)
 📊 Dataset
-No external dataset used
-System builds self-generated dataset
+No external dataset is used
+System builds a self-generated dataset
 Data comes from user transactions stored in SQLite:
 Date
 Amount
 Category
 Description
 
-👉 Over time, this becomes a personal financial dataset.
+👉 Over time, this becomes a personal financial intelligence dataset.
 
 🤖 AI Categorization (Feature Extraction)
 
@@ -79,7 +88,7 @@ SentenceTransformer (all-MiniLM-L6-v2)
 
 Working:
 
-Converts text → vector embeddings
+Converts text into vector embeddings
 Compares similarity with category vectors
 Assigns best matching category
 
@@ -89,22 +98,27 @@ Input: "Swiggy dinner order"
 Output: Food 🍕
 📸 OCR (Receipt Processing)
 
-Library:
+Library Used:
 
 pytesseract (Tesseract OCR)
 
-Process:
+Workflow:
 
 Upload receipt image
-Image preprocessing (PIL)
-Text extraction via OCR
-Parse amount & merchant details
+Image preprocessing using PIL
+Text extraction using OCR
+Parse amount + merchant details
 📈 ML Model (Forecasting)
 
 Model Used:
 
 Facebook Prophet
 
+Steps:
+
+Convert data into time-series format
+Train model on historical expenses
+Predict future spending trends
 📊 Feature Engineering
 
 Extracted features:
@@ -112,12 +126,9 @@ Extracted features:
 Monthly total spending
 Category-wise spending
 Daily expense patterns
-Frequency of transactions
-OCR extracted amounts
+Transaction frequency
+OCR extracted values
 🗄️ Database (SQLite)
-
-Table: expenses
-
 Column	Type
 id	INTEGER PRIMARY KEY
 date	TEXT
@@ -126,7 +137,7 @@ amount	REAL
 description	TEXT
 📄 PDF Report Generation
 
-Libraries:
+Libraries Used:
 
 ReportLab
 Matplotlib
@@ -135,18 +146,24 @@ Includes:
 
 Pie chart (expense distribution)
 Bar chart (category-wise spending)
-Clean single-page report layout
+Clean professional layout
+
+
 🔐 Authentication System
 bcrypt password hashing
 Email + username validation
 Secure login/register system
-💬 Chat Assistant
-Rule-based AI assistant
+
+
+💬 AI Chat Assistant
+Rule-based assistant
 Uses database queries
-Answers like:
-Total monthly spend
+Answers questions like:
+Total monthly spending
 Highest category
 Spending patterns
+
+
 🛠️ Tech Stack
 Frontend: Streamlit
 Backend: Python
@@ -157,12 +174,16 @@ OCR: Tesseract
 Visualization: Plotly + Matplotlib
 PDF Generation: ReportLab
 Security: bcrypt
+
+
 🔥 Key Highlights
 No external dataset required (self-learning system)
 Combines AI + ML + OCR in one project
 Learns from user behavior over time
 Fully offline-capable (except email alerts)
-Production-style project structure
+Production-level project structure
+
+
 🚀 Future Improvements
 WhatsApp alerts integration
 Bank transaction sync
