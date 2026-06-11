@@ -154,12 +154,12 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ## 📸 Screenshots
 
-### 🔐 Login Page
+### 🔐 Home Page
 ![Login](Snaps/pic1.png)
 
 ---
 
-### 📝 Register Page
+### 📝 Login Page
 ![Register](Snaps/pic2.png)
 
 ---
@@ -179,7 +179,7 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ---
 
-### 📊 Dashboard View
+### 📊  View Expense
 ![Dashboard](Snaps/pic4.png)
 
 ---
@@ -189,7 +189,7 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ---
 
-### 🤖 AI Chatbot
+### 🤖 AI Insight
 ![Chatbot](Snaps/pic6.png)
 
 ---
@@ -199,7 +199,7 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ---
 
-### 📄 Final Report Output
+### 📄 Chatbot
 ![Report](Snaps/pic8.png)
 
 ## 🔥 Key Highlights
