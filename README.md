@@ -152,6 +152,47 @@ Streamlit | Python | SQLite | Prophet | SentenceTransformers | Tesseract OCR | P
 
 ---
 
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](Snaps/pic1.png)
+
+---
+
+### 📝 Register Page
+![Register](Snaps/pic2.png)
+
+---
+
+### ➕ Add Expense Page
+![Add Expense](Snaps/pic3.png)
+
+---
+
+### 📊 Dashboard View 1
+![Dashboard 1](Snaps/pic4.png)
+
+---
+
+### 📊 Dashboard View 2
+![Dashboard 2](Snaps/pic5.png)
+
+---
+
+### 📈 Analytics View
+![Analytics](Snaps/pic6.png)
+
+---
+
+### 🤖 AI Chatbot
+![Chatbot](Snaps/pic7.png)
+
+---
+
+### 📄 PDF Report
+![Report](Snaps/pic8.png)
+
+
 ## 🔥 Key Highlights
 
 - No dataset required (self-learning system)
