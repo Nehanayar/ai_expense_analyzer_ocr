@@ -21,7 +21,7 @@ An end-to-end AI-powered personal finance tracker built using **Streamlit, Machi
 
 
 ## 🌐 Live Demo
-https://ai-expense-analyzer-neha.streamlit.app/
+https://neha-aiexpense-ocr.streamlit.app/
 
 ---
 
