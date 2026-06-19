@@ -17,13 +17,29 @@ from database import (
 
 load_dotenv()
 
-# ── OCR ──────────────────────────────────────────────────────────────
+
+
+# ── OCR IMPORTS ─────────────────────
 try:
     from PIL import Image as PILImage
     import pytesseract
+
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     OCR_AVAILABLE = True
+
 except ImportError:
     OCR_AVAILABLE = False
+
+
+# ── OCR FUNCTION
+def extract_text_from_image(uploaded_file):
+    if not OCR_AVAILABLE:
+        return "OCR not available"
+
+    img = PILImage.open(uploaded_file)
+    text = pytesseract.image_to_string(img)
+    return text
+
 
 # ── PAGE CONFIG ───────────────────────────────────────────────────────
 st.set_page_config(
@@ -186,34 +202,85 @@ def predict_category(text):
     return ("Uncategorized", confidence) if confidence < 0.28 else (best, confidence)
 
 def extract_from_receipt(image):
-    """Tesseract OCR → (amount, description)."""
-    text   = pytesseract.image_to_string(image)
-    lines  = [l.strip() for l in text.splitlines() if l.strip()]
+    """Tesseract OCR → (amount, description).
+
+    Tesseract often misreads ₹ as %, Rs, or nothing.
+    So we match 'Total' keyword + any nearby number on the SAME line,
+    scanning all lines and taking the LAST match (grand total is at bottom).
+    Pin codes / invoice numbers are rejected by the < 100000 guard.
+    """
+    import pytesseract
+
+    # Preprocess: grayscale + slight upscale helps Tesseract accuracy
+    img_gray = image.convert("L")
+    w, h = img_gray.size
+    img_gray = img_gray.resize((w * 2, h * 2))
+
+    text  = pytesseract.image_to_string(img_gray, lang="eng")
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+
     amount = None
     desc   = "Receipt expense"
 
-    amount_re = re.compile(
-        r'(?:rs\.?|inr|₹|total|amount|grand total)[^\d]*([\d,]+\.?\d*)', re.I
+    # Tesseract reads ₹ as "7" — so ₹679.00 becomes "7679.00"
+    # Strategy: find lines with "Total" keyword OR lines with "7NNN.NN" pattern
+    # (where leading 7 = misread ₹ symbol)
+
+    # Pass 1: "Total" keyword + number on same line
+    total_re = re.compile(
+        r'\b(?:grand\s+total|total\s+amount|net\s+total|total)\b'
+        r'[^0-9]{0,20}?'
+        r'7?(\d{2,6}(?:[.,]\d{1,2})?)',   # optional leading 7 (misread ₹)
+        re.I
     )
-    plain_re  = re.compile(r'\b(\d{2,6}(?:\.\d{1,2})?)\b')
-
     for line in lines:
-        m = amount_re.search(line)
+        m = total_re.search(line)
         if m:
-            amount = float(m.group(1).replace(",", ""))
-            break
-    if amount is None:
-        for line in lines:
-            m = plain_re.search(line)
-            if m:
-                amount = float(m.group(1).replace(",", ""))
-                break
+            try:
+                val = float(m.group(1).replace(",", "."))
+                if 1 < val < 100000:
+                    amount = val
+            except ValueError:
+                pass
 
+    # Pass 2: line starts with "7NNN.NN" — tesseract's ₹NNN.NN
+    # e.g. "7679.00" or "Paid via UPI 7679.00"
+    if amount is None:
+        rupee_misread_re = re.compile(r'\b7(\d{2,5}(?:[.,]\d{1,2})?)\b')
+        for line in lines:
+            m = rupee_misread_re.search(line)
+            if m:
+                try:
+                    val = float(m.group(1).replace(",", "."))
+                    if 1 < val < 100000:
+                        amount = val
+                        break
+                except ValueError:
+                    pass
+
+    # Pass 3: plain Rs/INR/% prefix fallback
+    if amount is None:
+        rupee_re = re.compile(
+            r'(?:rs\.?|inr|₹|%)\s*(\d{1,6}(?:[.,]\d{1,2})?)', re.I
+        )
+        for line in lines:
+            m = rupee_re.search(line)
+            if m:
+                try:
+                    val = float(m.group(1).replace(",", "."))
+                    if 1 < val < 100000:
+                        amount = val
+                        break
+                except ValueError:
+                    pass
+    # Description: first meaningful line (skip noise words & pure numbers)
     skip = {"total","amount","rs","inr","bill","invoice","receipt",
-            "tax","gst","subtotal","cash","change","paid","thank","you"}
-    for line in lines[:6]:
+            "tax","gst","subtotal","cash","change","paid","thank","you",
+            "tax invoice","end of invoice"}
+    for line in lines[:8]:
         words = line.lower().split()
-        if not all(w in skip or w.replace(".","").replace(",","").isdigit() for w in words):
+        if not all(w in skip or w.replace(".","").replace(",","").replace("₹","").isdigit()
+                   for w in words):
             desc = line
             break
 
@@ -552,7 +619,7 @@ else:
                     col_img, col_form = st.columns([1, 1.4])
 
                     with col_img:
-                        st.image(img, caption="Uploaded receipt", use_column_width=True)
+                        st.image(img, caption="Uploaded receipt", width=400)
 
                     with col_form:
                         with st.spinner("🔍 Reading receipt…"):
@@ -912,3 +979,27 @@ else:
                     )
         else:
             st.info("Add some expenses first, then come back and chat! 💬")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
