@@ -24,7 +24,7 @@ try:
     from PIL import Image as PILImage
     import pytesseract
 
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
     OCR_AVAILABLE = True
 
 except ImportError:
